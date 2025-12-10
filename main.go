@@ -12,13 +12,20 @@ func ping(out chan<- string) {
 	}
 }
 
+func pong(out chan<- string) {
+	for {
+		out <- "pong"
+		time.Sleep(time.Second * 2)
+	}
+}
+
 func main() {
 	out := make(chan string)
 
 	go ping(out)
+	go pong(out)
 
 	for {
 		fmt.Println(<-out)
 	}
-
 }
